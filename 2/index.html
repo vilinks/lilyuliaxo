@@ -33,24 +33,32 @@
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.first-version-media>video{display:none}}
   </style>
 <style data-james-extra-sites="1">.additional-sites{display:grid;gap:8px;margin-top:18px}.additional-site{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px 15px;border:1px solid #ffffff29;border-radius:16px;background:#ffffff0d;color:inherit;text-decoration:none;transition:background .2s,border-color .2s}.additional-site:hover{background:#ffffff19;border-color:#ffffff60}.additional-site:focus-visible{outline:2px solid #bdfb8b;outline-offset:4px}.additional-site-copy{min-width:0;display:grid;gap:5px}.additional-site-copy strong{font-family:var(--sans,Arial,sans-serif);font-size:13px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}.additional-site-copy small{font-family:var(--sans,Arial,sans-serif);font-size:10px;line-height:1.45;color:#ffffffa1;overflow-wrap:anywhere}.additional-site-arrow{font-size:19px;color:#ffffffb3}.additional-site[data-site-id="glowroster"]{border-color:#c8ff5740;background:linear-gradient(110deg,#c8ff5711,#ffffff09)}</style>
-<style data-james-external-browser="1">
-  #james-browser[hidden], #james-browser [hidden]{display:none!important}
-  #james-browser{position:relative;z-index:100;box-sizing:border-box;display:flex;justify-content:center;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;background:#10131b;color:#f7f8fc;border-bottom:1px solid #ffffff18;font:500 14px/1.4 system-ui,-apple-system,sans-serif}
-  #james-browser button,#james-browser .james-browser-open{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid #ffffff33;border-radius:999px;background:#ffffff10;color:inherit;font:650 13px/1.25 system-ui,-apple-system,sans-serif;text-decoration:none;cursor:pointer;letter-spacing:normal;text-transform:none}
+<style data-james-external-browser="2">
+  #james-browser[hidden], #james-browser [hidden], .share-button[data-james-replaced-share]{display:none!important}
+  #james-browser{position:relative;z-index:2;flex:none;margin-inline-start:auto;color:#f7f8fc;font:500 14px/1.4 system-ui,-apple-system,sans-serif;text-align:left}
+  #james-browser button,#james-browser .james-browser-open{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:0 12px;border:1px solid #ffffff33;border-radius:999px;background:#ffffff10;color:inherit;font:650 13px/1.25 system-ui,-apple-system,sans-serif;text-decoration:none;cursor:pointer;letter-spacing:normal;text-transform:none}
+  #james-browser .james-browser-open{background:#17283b;border-color:#a5d4ff6b;box-shadow:inset 0 1px #ffffff14;white-space:nowrap}
+  #james-browser .james-browser-open:hover,#james-browser .james-browser-open:active{background:#213b54;border-color:#b9deff}
+  #james-browser .james-browser-caption{display:grid;gap:2px}
+  #james-browser .james-browser-kicker{color:#b9dcff;font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  #james-browser svg{flex:none;color:#b9dcff}
   #james-browser :is(button,a,input):focus-visible{outline:2px solid #a0caff;outline-offset:2px}
-  #james-browser .james-browser-tip{box-sizing:border-box;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);width:min(340px,calc(100% - 24px));padding:12px 14px 14px;border:1px solid #ffffff2e;border-radius:18px;background:#1a2030;color:#f7f8fc;box-shadow:0 14px 40px #0008;text-align:left}
+  #james-browser .james-browser-tip{box-sizing:border-box;position:absolute;top:calc(100% + 8px);inset-inline-end:0;width:min(305px,calc(100vw - 76px));padding:12px 14px 14px;border:1px solid #ffffff2e;border-radius:18px;background:#1a2030;color:#f7f8fc;box-shadow:0 14px 40px #0008;text-align:left}
   #james-browser .james-browser-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}
   #james-browser .james-browser-close{min-width:44px;padding:0;font-size:20px}
   #james-browser p{margin:2px 0 12px;color:#dde1ec;font:inherit}
   #james-browser input{box-sizing:border-box;width:100%;min-width:0;margin-top:8px;padding:9px;border:1px solid #ffffff33;border-radius:8px;background:#10131b;color:inherit;font-size:16px}
-  body[data-james-browser-visible] :is(.link-hub,.page-shell,.first-version-page){min-height:calc(100svh - 57px - env(safe-area-inset-top,0px))}
-  body[data-james-browser-visible="legacy"]{position:relative;padding-top:calc(75px + env(safe-area-inset-top,0px))}
-  body[data-james-browser-visible="legacy"] #james-browser{position:absolute;inset:0 0 auto}
+  [data-james-browser-host]{position:relative;z-index:3}
+  .topbar[data-james-browser-host] .brand{min-width:0}
+  .topbar[data-james-browser-host] .brand-mark{flex:none}
+  .topbar[data-james-browser-host] .brand-copy{min-width:0}
+  .topbar[data-james-browser-host] .brand-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #james-browser[data-legacy-card]{width:max-content;margin-block-end:14px}
 </style>
 </head>
 <body>
 <div id="james-browser" hidden>
-  <a class="james-browser-open" href="#james-browser-tip" role="button" aria-expanded="false" aria-controls="james-browser-tip">Open in browser <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6m0-6-9 9m8 1v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/></svg></a>
+  <a class="james-browser-open" href="#james-browser-tip" role="button" aria-expanded="false" aria-controls="james-browser-tip"><span class="james-browser-caption"><span class="james-browser-kicker" aria-hidden="true">Tap to continue</span><span>Open in browser</span></span><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6m0-6-9 9m8 1v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/></svg></a>
   <div id="james-browser-tip" class="james-browser-tip" role="region" aria-label="Browser options" hidden>
     <div class="james-browser-heading"><strong>Continue in your browser</strong><button class="james-browser-close" type="button" aria-label="Close browser options">×</button></div>
     <p>Still here? Tap <strong>⋯</strong> in the app and choose <strong>Open in browser</strong>, or copy this link and paste it into your browser.</p>
@@ -127,7 +135,7 @@
       });
     })();
   </script>
-<script data-james-external-browser="1">(function initBrowserControl() {
+<script data-james-external-browser="2">(function initBrowserControl() {
   const ua = navigator.userAgent || '';
   const ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
   const android = /Android/i.test(ua);
@@ -135,6 +143,17 @@
   if (!/^https?:$/.test(location.protocol)) return;
 
   const root = document.getElementById('james-browser');
+  const share = document.querySelector('.share-button');
+  if (share) {
+    share.after(root);
+    share.parentElement.setAttribute('data-james-browser-host', '');
+    share.setAttribute('data-james-replaced-share', '');
+  } else {
+    const card = document.querySelector('.card');
+    if (!card) return;
+    card.prepend(root);
+    root.setAttribute('data-legacy-card', '');
+  }
   const open = root.querySelector('.james-browser-open');
   const tip = root.querySelector('.james-browser-tip');
   const close = root.querySelector('.james-browser-close');
@@ -189,7 +208,6 @@
   });
   updateHref();
   root.hidden = false;
-  document.body.setAttribute('data-james-browser-visible', root.nextElementSibling?.matches('.card') ? 'legacy' : '');
 })();</script>
 </body>
 </html>
