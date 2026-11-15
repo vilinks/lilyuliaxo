@@ -33,14 +33,13 @@
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.first-version-media>video{display:none}}
   </style>
 <style data-james-extra-sites="1">.additional-sites{display:grid;gap:8px;margin-top:18px}.additional-site{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px 15px;border:1px solid #ffffff29;border-radius:16px;background:#ffffff0d;color:inherit;text-decoration:none;transition:background .2s,border-color .2s}.additional-site:hover{background:#ffffff19;border-color:#ffffff60}.additional-site:focus-visible{outline:2px solid #bdfb8b;outline-offset:4px}.additional-site-copy{min-width:0;display:grid;gap:5px}.additional-site-copy strong{font-family:var(--sans,Arial,sans-serif);font-size:13px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}.additional-site-copy small{font-family:var(--sans,Arial,sans-serif);font-size:10px;line-height:1.45;color:#ffffffa1;overflow-wrap:anywhere}.additional-site-arrow{font-size:19px;color:#ffffffb3}.additional-site[data-site-id="glowroster"]{border-color:#c8ff5740;background:linear-gradient(110deg,#c8ff5711,#ffffff09)}</style>
-<style data-james-external-browser="2">
+<style data-james-external-browser="3">
   #james-browser[hidden], #james-browser [hidden], .share-button[data-james-replaced-share]{display:none!important}
   #james-browser{position:relative;z-index:2;flex:none;margin-inline-start:auto;color:#f7f8fc;font:500 14px/1.4 system-ui,-apple-system,sans-serif;text-align:left}
   #james-browser button,#james-browser .james-browser-open{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:0 12px;border:1px solid #ffffff33;border-radius:999px;background:#ffffff10;color:inherit;font:650 13px/1.25 system-ui,-apple-system,sans-serif;text-decoration:none;cursor:pointer;letter-spacing:normal;text-transform:none}
   #james-browser .james-browser-open{background:#17283b;border-color:#a5d4ff6b;box-shadow:inset 0 1px #ffffff14;white-space:nowrap}
   #james-browser .james-browser-open:hover,#james-browser .james-browser-open:active{background:#213b54;border-color:#b9deff}
-  #james-browser .james-browser-caption{display:grid;gap:2px}
-  #james-browser .james-browser-kicker{color:#b9dcff;font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  #james-browser .james-browser-cue{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin:0 6px 3px 0;color:#c5e1ff;font-size:11px;font-weight:750;line-height:1;text-shadow:0 1px 4px #000}
   #james-browser svg{flex:none;color:#b9dcff}
   #james-browser :is(button,a,input):focus-visible{outline:2px solid #a0caff;outline-offset:2px}
   #james-browser .james-browser-tip{box-sizing:border-box;position:absolute;top:calc(100% + 8px);inset-inline-end:0;width:min(305px,calc(100vw - 76px));padding:12px 14px 14px;border:1px solid #ffffff2e;border-radius:18px;background:#1a2030;color:#f7f8fc;box-shadow:0 14px 40px #0008;text-align:left}
@@ -58,7 +57,8 @@
 </head>
 <body>
 <div id="james-browser" hidden>
-  <a class="james-browser-open" href="#james-browser-tip" role="button" aria-expanded="false" aria-controls="james-browser-tip"><span class="james-browser-caption"><span class="james-browser-kicker" aria-hidden="true">Tap to continue</span><span>Open in browser</span></span><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6m0-6-9 9m8 1v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/></svg></a>
+  <span class="james-browser-cue" aria-hidden="true">Tap here first <svg width="21" height="17" viewBox="0 0 21 17" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2c8 0 12 4 12 12m-4-4 4 4 4-4"/></svg></span>
+  <a class="james-browser-open" href="#james-browser-tip" role="button" aria-expanded="false" aria-controls="james-browser-tip">Open in browser <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6m0-6-9 9m8 1v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/></svg></a>
   <div id="james-browser-tip" class="james-browser-tip" role="region" aria-label="Browser options" hidden>
     <div class="james-browser-heading"><strong>Continue in your browser</strong><button class="james-browser-close" type="button" aria-label="Close browser options">×</button></div>
     <p>Still here? Tap <strong>⋯</strong> in the app and choose <strong>Open in browser</strong>, or copy this link and paste it into your browser.</p>
@@ -135,12 +135,34 @@
       });
     })();
   </script>
-<script data-james-external-browser="2">(function initBrowserControl() {
+<script data-james-external-browser="3">(function initBrowserControl() {
+  if (!/^https?:$/.test(location.protocol)) return;
+
+  // The marker travels only in the outgoing link, so a blocked handoff never hides the control here.
+  const marker = 'james_browser_handoff=1';
+  function splitUrl(url) {
+    const offset = url.indexOf('#');
+    return offset < 0 ? [url, ''] : [url.slice(0, offset), url.slice(offset)];
+  }
+  function browserUrl(url) {
+    const [base, hash] = splitUrl(url);
+    return base + (base.includes('?') ? '&' : '?') + marker + hash;
+  }
+  const [base, hash] = splitUrl(location.href);
+  const hasMarker = base.includes('?') && (base.endsWith('?' + marker) || base.endsWith('&' + marker));
+  if (hasMarker) {
+    try {
+      // Keep the hidden state on this history entry across reloads, without changing the original query encoding.
+      history.replaceState({ ...history.state, jamesBrowserHandoff: true }, '', base.slice(0, -marker.length - 1) + hash);
+    } catch {}
+    return;
+  }
+  if (history.state?.jamesBrowserHandoff === true) return;
+
   const ua = navigator.userAgent || '';
   const ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
   const android = /Android/i.test(ua);
   if (!ios && !android) return;
-  if (!/^https?:$/.test(location.protocol)) return;
 
   const root = document.getElementById('james-browser');
   const share = document.querySelector('.share-button');
@@ -169,7 +191,7 @@
   }
   function updateHref() {
     // An in-app tab can report the same user agent as a standalone browser.
-    const target = handoff(location.href);
+    const target = handoff(browserUrl(location.href));
     open.setAttribute('href', target || '#james-browser-tip');
     return Boolean(target);
   }
@@ -194,7 +216,7 @@
     if (event.key === 'Escape' && !tip.hidden) dismiss();
   });
   copy.addEventListener('click', async () => {
-    const url = location.href;
+    const url = browserUrl(location.href);
     try {
       await navigator.clipboard.writeText(url);
       status.textContent = ' Link copied.';
